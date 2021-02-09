@@ -1,0 +1,24 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-7
+問4
+以下は、アクセス記録テーブル（access_log）から2013年1月分のアクセスログをreferer、ip_address列について降順で
+取り出すためのSQL命令ですが、2点誤りがあります。誤りを指摘してください。
+
+
+SELECT
+	*
+FROM
+	access_log
+WHERE
+	access_date IN ('2013-01-01','2013-01-31')
+ORDER BY
+	referer, ip_address DESC
+;
+
+①18行目 INではなく、BETWEENで1月分を抽出範囲とする。access_date BETWEEN 2013-01-01 AND 2013-01-31
+②20行目のrefererに降順に並べ替えるキーが記述されていない。
