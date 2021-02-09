@@ -1,0 +1,52 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-9
+問4
+書籍情報テーブル（books）で、出版社ごとの書籍価格の最大値を求めてみましょう。
+
+//選択する
+SELECT
+	//publishとprice列の最大値を取得する
+	publish,
+	MAX(price)
+//どこのテーブルなのか
+FROM
+	//書籍情報テーブルから
+	books
+//列指定しグループ化
+GROUP BY 
+	//出版社をグループ化に指定する
+	publish
+;
+
+SELECT
+	publish,
+	MAX(price)
+FROM
+	books
+GROUP BY 
+	publish
+;
+
+実行結果
+mysql> SELECT
+    -> publish,
+    -> MAX(price)
+    -> FROM
+    -> books
+    -> GROUP BY
+    -> publish
+    -> ;
++--------------+------------+
+| publish      | MAX(price) |
++--------------+------------+
+| 山田出版     |       5500 |
+| 秀和システム |       3000 |
+| 翔泳社       |       3300 |
+| 日経BP       |       3200 |
++--------------+------------+
+4 rows in set (0.00 sec)
