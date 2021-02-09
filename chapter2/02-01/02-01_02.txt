@@ -1,0 +1,60 @@
+
+作成者：山下
+作成日：2021/2/9
+
+chapter2
+
+2-1
+問2
+店舗テーブル（shop）と月間売り上げテーブル（sales）から2012年12月の売り上げを売上高の高い順に出力してみましょう。
+
+SELECT
+	sh.s_id,
+	sl.s_value
+FROM
+	①
+INNER JOIN
+	②
+ON
+	③
+WHERE
+	④
+ORDER BY
+	⑤
+;
+
+①shop AS sh
+
+②sales AS sl
+
+③sh.s_id=sl.s_id
+
+④sl.s_date IN('2012-12')
+
+⑤sl.s_value DESC
+
+
+実行結果
+mysql> SELECT
+    -> sh.s_id,
+    -> sl.s_value
+    -> FROM
+    -> shop AS sh
+    -> INNER JOIN
+    -> sales AS sl
+    -> ON
+    -> sh.s_id=sl.s_id
+    -> WHERE
+    -> sl.s_date IN('2012-12')
+    -> ORDER BY
+    -> sl.s_value DESC
+    -> ;
++-------+---------+
+| s_id  | s_value |
++-------+---------+
+| K0001 |   11234 |
+| M0001 |   11145 |
+| K0002 |   10456 |
+| H0001 |    9861 |
++-------+---------+
+4 rows in set (0.00 sec)

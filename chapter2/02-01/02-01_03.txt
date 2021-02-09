@@ -1,0 +1,84 @@
+
+作成者：山下
+作成日：2021/2/9
+
+chapter2
+
+2-1
+問3
+店舗テーブル（shop）と月間売り上げテーブル（sales）から2012年の全売上高を、売上高の低い順に出力してみましょう。
+
+
+//出力させる列を選択
+SELECT
+	//店舗テーブルの店舗コード列を選択
+	sh.s_id,
+	//売り上げテーブルから売上高列を選択
+	sl.s_value
+//指定したテーブルから情報を取得するためFROMを定義
+FROM
+	//取得するテーブルを定義する。テーブル名を付けるためASを使用する。
+	shop AS sh
+//結合するテーブル名を定義
+INNER JOIN
+	//結合するテーブルを定義する。テーブル名を付けるためASを使用する。
+	sales AS sl
+//結合するキーを指定するため、ONを記述する。
+ON
+	//2つのテーブルにある一致するキー指定するため定義する。
+	sh.s_id=sl.s_id
+//抽出する条件を指定するためWHERE句を定義
+WHERE
+	//2012年分の値を絞り込むためLIKEを使用し抽出する。。
+	sl.s_date LIKE('2012%')
+//出力した結果を並べ替えるためORDER BYを宣言
+ORDER BY
+	//売上高を昇順で並べ替えるため、ASCを使用する
+	sl.s_value ASC
+;
+
+SELECT
+	sh.s_id,
+	sl.s_value
+FROM
+	shop AS sh
+INNER JOIN
+	sales AS sl
+ON
+	sh.s_id=sl.s_id
+WHERE
+	sl.s_date LIKE('2012%')
+ORDER BY
+	sl.s_value ASC
+;
+
+
+実行結果
+mysql> SELECT
+    -> sh.s_id,
+    -> sl.s_value
+    -> FROM
+    -> shop AS sh
+    -> INNER JOIN
+    -> sales AS sl
+    -> ON
+    -> sh.s_id=sl.s_id
+    -> WHERE
+    -> sl.s_date LIKE('2012%')
+    -> ORDER BY
+    -> sl.s_value ASC
+    -> ;
++-------+---------+
+| s_id  | s_value |
++-------+---------+
+| H0001 |    9861 |
+| H0001 |    9975 |
+| K0002 |   10124 |
+| K0001 |   10142 |
+| K0002 |   10456 |
+| M0001 |   10784 |
+| M0001 |   11145 |
+| K0001 |   11234 |
+| M0002 |   12032 |
++-------+---------+
+9 rows in set (0.00 sec)
