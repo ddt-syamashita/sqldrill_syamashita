@@ -1,0 +1,27 @@
+
+作成者：山下
+作成日：2021/2/9
+
+chapter1
+
+1-12
+問5
+以下は、社員テーブル（employee）から所属部署ごとの女性の人数を求め、3人以上の部署だけを
+出力するためのSQL命令ですが、2つ誤りがあります。誤りを指摘してください。
+
+SELECT
+	depart_id,
+	COUNT(*)
+FROM
+	employee
+WHERE
+	sex=2
+ORDER BY
+	depart_id
+WHERE
+	COUNT(*)>=3
+;
+
+
+①19行目のORDER BYが誤り。所属部署ごとに求めるため、グループ化する「GROUP BY」が正しい。
+②21行目のWHERE句が誤り。集計した結果をさらに抽出するためには「HAVING」を使用する。
