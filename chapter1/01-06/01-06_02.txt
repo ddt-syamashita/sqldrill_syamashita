@@ -1,0 +1,46 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-6
+問2
+ユーザテーブル（usr）から東京都在住で、かつ、E-Mailアドレスのドメインが「examples.com」のユーザ情報を取り出してみましょう。
+
+
+SELECT
+	l_name,
+	f_name,
+	email
+FROM
+	usr
+WHERE
+	①
+	AND
+	②
+;
+
+列の値が指定した文字列「東京都」と一致している情報を抽出する
+①prefecture = '東京都'
+列の値が指定した文字列で終わる情報を抽出するため、LIKEを使用する
+②email LIKE '%examples.com'
+;
+
+実行結果
+mysql> SELECT
+    -> l_name,
+    -> f_name,
+    -> email
+    -> FROM
+    -> usr
+    -> WHERE
+    -> prefecture = '東京都'
+    -> AND email LIKE '%examples.com'
+    -> ;
++--------+--------+------------------+
+| l_name | f_name | email            |
++--------+--------+------------------+
+| 小野   | 雄二   | ono@examples.com |
++--------+--------+------------------+
+1 row in set (0.00 sec)
