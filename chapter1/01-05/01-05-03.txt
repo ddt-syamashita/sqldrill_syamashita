@@ -1,0 +1,55 @@
+
+作成者：山下
+作成日：2021/2/3
+
+chapter1
+
+1-5
+問3
+書籍情報テーブル（books）から署名が「SQL〇〇」（〇は1文字）である書籍の情報を取り出してみましょう。
+取り出す列は、isbn、title、price列とします。
+
+
+//選択する
+SELECT
+	//isbn、title、price列を指定
+	isbn,
+	title,
+	price
+//どこのテーブルなのか
+FROM
+	//書籍情報テーブルから
+	books
+//条件指定
+WHERE
+	//titleにSQL○○である書籍情報を抽出する
+	title LIKE 'SQL__';
+;
+
+SELECT
+	isbn,
+	title,
+	price
+FROM
+	books
+WHERE
+	title LIKE 'SQL__'
+;
+
+
+実行結果
+mysql> SELECT
+    -> isbn,
+    -> title,
+    -> price
+    -> FROM
+    -> books
+    -> WHERE
+    -> title LIKE 'SQL__'
+    -> ;
++---------------+---------+-------+
+| isbn          | title   | price |
++---------------+---------+-------+
+| 4-0010-0000-9 | SQL入門 |  5500 |
++---------------+---------+-------+
+1 row in set (0.05 sec)

@@ -1,0 +1,51 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-5
+問4
+社員テーブル（employee）から氏（カナ）が「ア」で始まる社員の情報だけを取り出してみましょう。
+取り出す列は、l_name、f_name列とします。
+
+
+//選択する
+SELECT
+	//l_nameとf_name列を指定
+	l_name,
+	f_name
+//どこのテーブルなのか
+FROM
+	//社員テーブルから
+	employee
+//条件指定
+WHERE
+	//氏（カナ）が「ア」で始まる社員情報を抽出する
+	l_name_kana LIKE 'ア%';
+;
+
+SELECT
+	l_name,
+	f_name
+FROM
+	employee
+WHERE
+	l_name_kana LIKE 'ア%';
+;
+
+
+実行結果
+mysql> SELECT
+    -> l_name,
+    -> f_name
+    -> FROM
+    -> employee
+    -> WHERE
+    -> l_name_kana LIKE 'ア%';
++--------+--------+
+| l_name | f_name |
++--------+--------+
+| 相沢   | 聡     |
++--------+--------+
+1 row in set (0.00 sec)
