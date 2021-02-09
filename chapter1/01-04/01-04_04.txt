@@ -1,0 +1,58 @@
+
+作成者：山下
+作成日：2021/2/3
+
+chapter1
+
+1-4
+問4
+アンケート集計テーブル（quest）から年齢（age列）が30歳以上40歳未満の人の回答のみを抜き出してみましょう。
+取り出す列は、name、sex、prefecture列とします。
+
+//選択する
+SELECT
+	//name、sex、prefecture列を指定
+	name,
+	sex,
+	prefecture
+//どこのテーブルなのか
+FROM
+	//アンケート集計テーブルから
+	quest
+//条件指定
+WHERE
+	//ageの値が30以上40未満
+	age BETWEEN 30 AND 40
+;
+
+SELECT
+	name,
+	sex,
+	prefecture,
+FROM
+	quest
+WHERE
+	age BETWEEN 30 AND 40
+;
+
+実行結果
+mysql> SELECT
+    -> name,
+    -> sex,
+    -> prefecture
+    -> FROM
+    -> quest
+    -> WHERE
+    -> age BETWEEN 30 AND 40
+    -> ;
++------------+-----+------------+
+| name       | sex | prefecture |
++------------+-----+------------+
+| 山田太郎   | 男  | 東京都     |
+| 江本修子   | 女  | 東京都     |
+| 小野博美   | 女  | 神奈川県   |
+| 有木守     | 男  | 千葉県     |
+| 南幸一     | 男  | 神奈川県   |
+| 根岸亜由美 | 女  | 千葉県     |
++------------+-----+------------+
+6 rows in set (0.00 sec)
