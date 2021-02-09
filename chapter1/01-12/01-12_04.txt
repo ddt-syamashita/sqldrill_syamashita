@@ -1,0 +1,74 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-12
+問4
+書籍情報テーブル（books）から出版社、分類IDごとに登録数を求め、
+登録数が3冊未満の情報だけを取り出してみましょう。
+
+
+//選択する
+SELECT
+	//publish列を指定
+	publish,
+	//category_idを指定
+	category_id,
+	//出版社、分類IDの登録数を求める
+	COUNT(publish)
+//どこのテーブルなのか
+FROM
+	//書籍情報テーブルから
+	books
+//列を指定しグループ化する
+GROUP BY
+	//出版社、分類IDごとに集計するため、publishとcategory_idの値をグループ化する
+	publish, category_id
+//集計した結果を絞り込み抽出する
+HAVING
+	//登録数が3冊未満の情報のみ抽出する
+	COUNT(publish)<3
+;
+
+SELECT
+	publish,
+	category_id,
+	COUNT(publish)
+FROM
+	books
+GROUP BY
+	publish, category_id
+HAVING
+	COUNT(publish)<3
+;
+
+
+実行結果
+mysql> SELECT
+    -> publish,
+    -> category_id,
+    -> COUNT(publish)
+    -> FROM
+    -> books
+    -> GROUP BY
+    -> publish, category_id
+    -> HAVING
+    -> COUNT(publish)<3
+    -> ;
++--------------+-------------+----------------+
+| publish      | category_id | COUNT(publish) |
++--------------+-------------+----------------+
+| 山田出版     | P1111       |              1 |
+| 山田出版     | A9999       |              1 |
+| 山田出版     | H9999       |              1 |
+| 山田出版     | S2222       |              1 |
+| 秀和システム | J4444       |              1 |
+| 秀和システム | P1111       |              1 |
+| 翔泳社       | X3333       |              1 |
+| 翔泳社       | P1111       |              1 |
+| 日経BP       | S2222       |              2 |
+| 日経BP       | X3333       |              1 |
++--------------+-------------+----------------+
+10 rows in set (0.00 sec)

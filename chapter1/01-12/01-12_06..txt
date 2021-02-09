@@ -1,0 +1,42 @@
+
+作成者：山下
+作成日：2021/2/9
+
+chapter1
+
+1-12
+問6
+アクセス記録テーブル（access_log）からアクセス日付が2013/01/01以降のものについて、
+リンク元URLごとにアクセス数を算出してみましょう。
+その際、アクセス数が5件未満のもののみをアクセス数降順で出力してください。
+以下の空欄を埋めて、SQL命令を完成させてみましょう。
+
+
+SELECT
+	referer,
+	①COUNT(referer)
+FROM
+	access_log
+WHERE
+	②access_date < 2013/01/01
+GROUP BY
+	referer
+③HAVING
+	COUNT(referer)<5
+ORDER BY
+	COUNT(referer) ④DESC
+;
+
+
+アクセス数ご算出するため、COUNT()関数を使用。
+①COUNT(referer)
+
+アクセス日付の指定された年月以降のみの情報を抽出するため条件を記述。
+②access_date < 2013/01/01
+
+集計した結果に対し条件抽出するためHAVING句を宣言
+③HAVING
+
+カウントしたアクセス数を降順で出力させるため、DESCを記述する
+④DESC
+
