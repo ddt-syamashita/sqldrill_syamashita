@@ -1,0 +1,49 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-12
+問2
+アンケート回答テーブル（quest）から都道府県ごとに男性回答者のみの年齢の最高値を求め、
+60歳より大きい行のみを取り出してみましょう。
+
+
+SELECT
+	①
+FROM
+	quest
+②
+	sex='男'
+GROUP BY
+	prefecture
+③
+	MAX(age)>60
+;
+
+指定した列ageの最高値を求めるため、MAX関数を使用。
+①prefecture,MAX(age)
+抽出するための条件文を記述する
+②WHERE
+集計した結果をさらに条件式で絞り込む抽出するため、HAVINGを記述する
+③HAVING
+
+
+実行結果
+mysql> SELECT
+    -> prefecture,
+    -> AVG(age)
+    -> FROM
+    -> quest
+    -> GROUP BY
+    -> prefecture
+    -> HAVING
+    -> AVG(age) BETWEEN 35 AND 50
+    -> ;
++------------+----------+
+| prefecture | AVG(age) |
++------------+----------+
+| 茨城県     |  38.6667 |
++------------+----------+
+1 row in set (0.00 sec)

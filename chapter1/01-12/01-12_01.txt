@@ -1,0 +1,46 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-12
+問1
+アンケート回答テーブル（quest）から都道府県ごとに年齢の平均値を求め、
+35歳以上50歳未満のデータのみを取り出してみましょう。以下の空欄を埋めて、SQL命令を完成させてください。
+
+
+SELECT
+	①
+FROM
+	quest
+GROUP BY
+	prefecture
+HAVING
+	②
+;
+
+年齢の平均値を求めるため、AVG関数を使用。
+①prefecture,AVG(age)
+年齢の平均値を求めた後、指定範囲の数値で抽出するためBETWEENを使用し数値範囲を記述する。
+②AVG(age) BETWEEN 35 AND 50
+;
+
+
+実行結果
+mysql> SELECT
+    -> prefecture,
+    -> AVG(age)
+    -> FROM
+    -> quest
+    -> GROUP BY
+    -> prefecture
+    -> HAVING
+    -> AVG(age) BETWEEN 35 AND 50
+    -> ;
++------------+----------+
+| prefecture | AVG(age) |
++------------+----------+
+| 茨城県     |  38.6667 |
++------------+----------+
+1 row in set (0.00 sec)
