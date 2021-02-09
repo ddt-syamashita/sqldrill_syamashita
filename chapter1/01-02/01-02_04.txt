@@ -1,0 +1,20 @@
+
+作成者：山下
+作成日：2021/2/3
+
+chapter1
+
+1-2
+問4
+以下は書籍情報テーブル（books）からtitle列とpublish列とを取り出すためのSQL命令ですが、誤りがあります。誤りを指摘してください。
+
+
+SELECTS
+	title
+	publish
+FROM
+	books
+;
+
+9行目のSELECT句が誤っている。最終文字のSが不要。
+10行目のtitle後に,が記述されていない。
