@@ -1,0 +1,55 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-11
+問4
+書籍情報テーブル（books）で、出版社ごとの書籍価格の平均値を求めてみましょう。
+平均値が小数点数になった場合、小数点以下を切り捨てます。
+
+//選択する
+SELECT
+	//publish列を指定する
+	publish,
+	//書籍価格の平均値を求めるためAVG関数を使用。小数点以下を切り捨てるため、ROUND関数を使用する。
+	ROUND(AVG(price))
+//どこのテーブルなのか
+FROM
+	//書籍情報テーブルから
+	books
+//列をグループ化する
+GROUP BY
+	//出版社ごとの書籍価格を求めるため、列を指定しグループ化する
+	publish
+;
+
+SELECT
+	publish,
+	ROUND(AVG(price))
+FROM
+	books
+GROUP BY
+	publish
+;
+
+
+実行結果
+mysql> SELECT
+    -> publish,
+    -> ROUND(AVG(price))
+    -> FROM
+    -> books
+    -> GROUP BY
+    -> publish
+    -> ;
++--------------+-------------------+
+| publish      | ROUND(AVG(price)) |
++--------------+-------------------+
+| 山田出版     |              2157 |
+| 秀和システム |              2400 |
+| 翔泳社       |              3150 |
+| 日経BP       |              2433 |
++--------------+-------------------+
+4 rows in set (0.00 sec)

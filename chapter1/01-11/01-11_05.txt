@@ -1,0 +1,24 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-11
+問5
+以下は、社員テーブル（employee）から部署、役所ごとに降順ソートした結果を出力させるための
+SQL命令ですが、誤りが2点あります。誤りを指摘してください。
+
+SELECT
+	depart_id,
+	class,
+	CONCAT('l_name', 'f_name') AS 氏名
+FROM
+	employee
+ORDER BY
+	depart_id,
+	class DESC
+;
+
+①15行目のCONCAT関数内の引数に''は不要。
+②19行目に降順ソートするキーのDESCが記述されていない。
