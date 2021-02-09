@@ -1,0 +1,76 @@
+
+作成者：山下
+作成日：2021/2/9
+
+chapter1
+
+1-13
+問3
+アクセス記録テーブル（access_log）からリンク元ごとのアクセス数を求め、10件未満を「C」、10件以上50未満を「B]、
+50以上を「A」とする「ランク」列を取得してみましょう。
+またデータはアクセス数が3件以上のものを多い順に並べるものとします。
+
+
+//列を選択する
+SELECT
+	//referer列の値を出力するため選択する
+	referer,
+	//集計した結果をカウントするため、COUNT関数を使用する
+	COUNT(*),
+//カウントした結果ごとに指定した名前を付けるためCASE文を使用する
+CASE
+	//カウント数50以上の場合、指定の文字列に変更する
+	WHEN COUNT(*) >= 50 THEN 'A'
+	//カウント数が10以上50未満の場合、指定の文字列に変更する
+	WHEN COUNT(*) >= 10 THEN 'B'
+	//上記条件以外の場合、指定の文字列に変更する
+	ELSE 'C'
+	//CASE文を終了させるため、ENDを定義。問題の通り列名を表示させるためASを使用する。
+	END AS 'ランク'
+//どのテーブルから取得するのか
+FROM
+	//アクセス記録テーブルから情報を取得する
+	access_log
+//グループ化宣言
+GROUP BY
+	//リンク元ごとにアクセス数を求めるため、referer列を指定
+	referer
+//集計した結果を条件絞り込みする
+HAVING
+	//アクセス数が3以上のものを抽出する
+	COUNT(*) >= 3
+//値を並べ替える
+ORDER BY
+	//抽出したアクセス数を多い順（降順）に並べ替えるためDESCを使用
+	COUNT(*) DESC
+;
+
+
+実行結果
+mysql> SELECT
+    -> referer,
+    -> COUNT(*),
+    -> CASE
+    -> WHEN COUNT(*) >= 50 THEN 'A'
+    -> WHEN COUNT(*) >= 10 THEN 'B'
+    -> ELSE 'C'
+    -> END AS 'ランク'
+    -> FROM
+    -> access_log
+    -> GROUP BY
+    -> referer
+    -> ORDER BY
+    -> COUNT(*) DESC
+    -> ;
++---------------------------+----------+--------+
+| referer                   | COUNT(*) | ランク |
++---------------------------+----------+--------+
+| http://wings.msn.to/hamu/ |      100 | A      |
+| http://wings.msn.to/neko/ |       11 | B      |
+| http://wings.msn.to/saru/ |        4 | C      |
+| http://wings.msn.to/inu/  |        3 | C      |
+| http://wings.msn.to/tori/ |        3 | C      |
+| http://wings.msn.to/kame/ |        3 | C      |
+| NULL                      |        2 | C      |
++---------------------------+----------+--------+
+7 rows in set (0.00 sec)
