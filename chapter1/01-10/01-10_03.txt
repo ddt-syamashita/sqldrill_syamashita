@@ -1,0 +1,58 @@
+
+作成者：山下
+作成日：2021/2/8
+
+chapter1
+
+1-10
+問3
+ユーザテーブル（usr）から都道府県別のユーザ数を求めてみましょう。
+なお、取り出す列の別名は、それぞれ「都道府県名」「ユーザ数」とします。
+
+
+//選択する
+SELECT
+	//prefecture列を指定し、指定された名前を付ける
+	prefecture AS 都道府県名,
+	//user_idの対象列数の列を指定し、別名をつける
+	COUNT(user_id) AS ユーザ数
+//どこのテーブルなのか
+FROM
+	//ユーザテーブルから
+	usr
+//列を指定しグループ化する
+GROUP BY
+	//都道府県の値をグループ化する
+	prefecture
+;
+
+SELECT
+	prefecture AS 都道府県名,
+	COUNT(user_id) AS ユーザ数
+FROM
+	usr
+GROUP BY
+	prefecture
+;
+
+実行結果
+mysql> SELECT
+    -> prefecture AS 都道府県名,
+    -> COUNT(user_id) AS ユーザ数
+    -> FROM
+    -> usr
+    -> GROUP BY
+    -> prefecture
+    -> ;
++------------+----------+
+| 都道府県名 | ユーザ数 |
++------------+----------+
+| 千葉県     |        4 |
+| 神奈川県   |        4 |
+| 茨城県     |        4 |
+| 東京都     |        3 |
+| 埼玉県     |        2 |
+| 栃木県     |        2 |
+| 静岡県     |        2 |
++------------+----------+
+7 rows in set (0.00 sec)
