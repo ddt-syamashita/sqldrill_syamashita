@@ -1,0 +1,26 @@
+
+作成者：山下
+作成日：2021/2/10
+
+chapter2
+
+2-3
+問4
+以下は、書籍目次テーブル（contents）から現在のコンテンツコードと前のコンテンツコードを、
+現在のコンテンツコードについて昇順で取り出すためのSQLですが、誤りが2点あります。誤りを指摘してください。
+
+SELECT
+	cp.c_id AS 前のページ ,
+	cp.c_id AS 現在のページ
+FROM
+	contents AS cp
+OUTER JOIN
+	contenst AS cn
+ON
+	cp.next_id <> cn.c_id
+ORDER BY
+	cn.c_id ASC
+;
+
+①17行目の内部結合を行う場合の定義が誤っている。INNER JOINが正しい記述。
+②20行目の結合キーを指定する際の演算子が誤り。=と記述する
