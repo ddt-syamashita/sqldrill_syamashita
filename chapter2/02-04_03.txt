@@ -1,0 +1,105 @@
+
+作成者：山下
+作成日：2021/2/10
+
+chapter2
+
+2-4
+問3
+注文書テーブル（order_main）と注文明細テーブル（order_desc）、ユーザテーブル（usr）、商品テーブル（product）を結合し、
+未納の注文について、発注日、注文コード、商品コード昇順に注文情報を出力してみましょう。
+出力列の別名は、発注日、注文コード、利用者氏名、商品名、商品単価、購入数とします。
+
+
+//取り出す列を選択する
+SELECT
+	//出力例をもとに出題の名前をASで設定し、必要な列を指定
+	om.order_date AS 発注日,
+	//出力例をもとに出題の名前をASで設定し、必要な列を指定
+	od.po_id AS 注文コード,
+	//出力例をもとに出題の名前をASで設定し、必要な列を指定
+	p.p_name AS 商品名,
+	//出力例をもとに出題の名前をASで設定し、必要な列を指定
+	p.price AS 商品単価,
+	//出力例をもとに出題の名前をASで設定し、必要な列を指定
+	od.quantity AS 購入数
+//どのテーブルから取得するのか
+FROM
+	(
+	//注文書テーブルから情報を取得するため、定義。ASを使用し、テーブル名をつける
+	order_main AS om
+	//注文書テーブルと注文明細テーブルを内部結合するため、INNER JOINを定義
+	INNER JOIN
+		//注文明細テーブルを定義。ASを使用し、テーブル名をつける
+		order_desc AS od
+	//結合キーを指定
+	ON
+		//それぞれのテーブルの注文番号を結合キーとして指定
+		om.po_id=od.po_id
+	)
+//注文書テーブルとユーザテーブルを内部結合するため、INNER JOINを定義
+INNER JOIN
+	//ユーザテーブルを定義。ASを使用し、テーブル名をつける
+	usr AS u
+//結合キーを指定するためONを定義
+ON
+	//それぞれのテーブルの利用者コードを結合キーとして指定
+	om.user_id=u.user_id
+//注文明細テーブルと商品テーブルを内部結合するため、INNER JOINを定義
+INNER JOIN
+	//商品テーブルを定義。ASを使用し、テーブル名をつける
+	product AS p
+//結合キーを指定するためONを定義
+ON
+	//それぞれのテーブルの商品コードを結合キーとして指定
+	od.p_id=p.p_id
+//条件抽出するためWHEREを定義
+WHERE
+	//未納の注文を抽出するため、IS NULLで条件定義
+	om.delivery_date IS NULL
+//出力した結果を並べ替えるため、ORDER BYを定義
+ORDER BY
+	//問題の通りに、3つの出力した結果を昇順に並べ替えるため、ASCを定義
+	om.order_date ASC,
+	od.po_id ASC,
+	p.p_id ASC
+;
+
+
+実行結果
+mysql> SELECT
+    -> om.order_date AS 発注日,
+    -> od.po_id AS 注文コード,
+    -> p.p_name AS 商品名,
+    -> p.price AS 商品単価,
+    -> od.quantity AS 購入数
+    -> FROM
+    -> (
+    -> order_main AS om
+    -> INNER JOIN
+    -> order_desc AS od
+    -> ON
+    -> om.po_id=od.po_id
+    -> )
+    -> INNER JOIN
+    -> usr AS u
+    -> ON
+    -> om.user_id=u.user_id
+    -> INNER JOIN
+    -> product AS p
+    -> ON
+    -> od.p_id=p.p_id
+    -> WHERE
+    -> om.delivery_date IS NULL
+    -> ORDER BY
+    -> om.order_date ASC,
+    -> od.po_id ASC,
+    -> p.p_id ASC
+    -> ;
++------------+------------+--------------+----------+--------+
+| 発注日     | 注文コード | 商品名       | 商品単価 | 購入数 |
++------------+------------+--------------+----------+--------+
+| 2012-12-22 |         19 | 赤ボールペン |      100 |    100 |
+| 2012-12-25 |         20 | 電卓         |      600 |     10 |
++------------+------------+--------------+----------+--------+
+2 rows in set (0.00 sec)
