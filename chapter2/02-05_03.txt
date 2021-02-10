@@ -1,0 +1,43 @@
+
+作成者：山下
+作成日：2021/2/10
+
+chapter2
+
+2-5
+問3
+店舗テーブル（shop）と月間売り上げテーブル（sales）から
+2012年12月の売上高が店舗売り上げ平均（2012年12月の平均）を
+下回っている店舗名とその売上高を挙げてみましょう。
+
+SELECT
+	s_name,
+	s_value
+FROM
+	shop
+WHERE
+	EXISTS
+	(
+	SELECT
+		AVG(s_value)
+	FROM
+		sales
+	WHERE
+		s_date = '2012-12'
+	
+	) <
+	(
+	SELECT
+		s_value
+	FROM
+		sales
+	WHERE
+		s_date = '2012-12'
+	
+	)
+;
+
+
+
+
+実行結果

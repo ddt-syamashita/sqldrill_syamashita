@@ -1,0 +1,60 @@
+
+作成者：山下
+作成日：2021/2/10
+
+chapter2
+
+2-5
+問2
+所属部署テーブル（depart）から社員テーブル（employee）で使われていない部署コード、部署名を取り出しましょう。
+以下の空欄を埋めて、SQL命令を完成させてください。
+
+
+SELECT
+	depart_id,
+	depart_name
+FROM
+	①depart
+WHERE
+②NOT EXISTS(
+	SELECT
+		*
+	FROM
+		employee
+	WHERE
+		③employee.depart_id=depart.depart_id
+	)
+;
+
+出力させる列情報を保持しているテーブルを定義するため、departを記述する
+①depart
+
+使われていない列を取り出すため、サブクエリを実行した結果、falseとなるNOT EXISTSを定義
+②NOT EXISTS
+
+2つのテーブルの一致している行を抽出するため、各テーブルのdepart_idを定義する
+③employee.depart_id=depart.depart_id
+
+
+実行結果
+mysql> SELECT
+    -> depart_id,
+    -> depart_name
+    -> FROM
+    -> depart
+    -> WHERE
+    -> NOT EXISTS(
+    -> SELECT
+    -> *
+    -> FROM
+    -> employee
+    -> WHERE
+    -> employee.depart_id=depart.depart_id
+    -> )
+    -> ;
++-----------+-------------+
+| depart_id | depart_name |
++-----------+-------------+
+| E02       | 第二営業部  |
++-----------+-------------+
+1 row in set (0.00 sec)
