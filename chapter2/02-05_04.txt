@@ -1,0 +1,59 @@
+
+作成者：山下
+作成日：2021/2/12
+
+chapter2
+
+2-5
+問4
+貸し出し記録テーブル（rental）上を検索し、これまでに1度も書籍の貸し出しを行ったことのない
+ユーザの氏名をユーザテーブル（usr）から取り出してみましょう。
+
+//出力させる列を選択する
+SELECT
+	//氏列と名列を結合して出力させる
+	CONCAT(l_name, f_name)
+//どのテーブルの情報から取得するのか
+FROM
+	//ユーザの氏名を取り出すため、ユーザテーブルを定義
+	usr
+//抽出する条件を記述する
+WHERE
+	//一致していない行を取り出すため、NOT EXISTSを使用
+	NOT EXISTS(
+	SELECT
+		*
+	FROM
+		//貸し出し記録を取得するためrentalテーブルを定義
+		rental
+	WHERE
+		 //貸し出し状態を抽出するため、両テーブルのuser_idが一致している行を抽出
+		usr.user_id=rental.user_id
+	)
+;
+
+
+実行結果
+mysql> SELECT
+    -> CONCAT(l_name, f_name)
+    -> FROM
+    -> usr
+    -> WHERE
+    -> NOT EXISTS(
+    -> SELECT
+    -> *
+    -> FROM
+    -> rental
+    -> WHERE
+    -> usr.user_id=rental.user_id
+    -> )
+    -> ;
++------------------------+
+| CONCAT(l_name, f_name) |
++------------------------+
+| 久保田守               |
+| 児玉毅                 |
+| 矢口亜由美             |
+| 村井佐知子             |
++------------------------+
+4 rows in set (0.00 sec)
