@@ -1,0 +1,69 @@
+
+作成者：山下
+作成日：2021/2/13
+
+chapter2
+
+2-6
+問2
+ユーザテーブル（usr）とアンケート回答テーブル（quest）、それぞれに登録されているユーザ氏名を
+比較し、ユーザテーブル（usr）にしか登録されていないもののみを取り出してみましょう。
+以下の空欄を埋めて、SQL命令を完成させてください。
+
+
+SELECT
+	①u.l_name || u.f_name AS 氏名
+FROM
+	usr AS u
+②EXCEPT
+SELECT
+	q.name
+FROM
+	③quest AS q
+;
+
+
+
+ユーザテーブルのみしか登録されていないものを取り出すため、ユーザテーブルのl_name、f_name列を指定
+①u.l_name || u.f_name AS 氏名
+
+両テーブルの差集合を求めるため、UNION句を定義
+②UNION
+
+両テーブルの差を求めるため、アンケート回答テーブルを定義。ASを使用し、テーブルに別名をつける
+③CONCAT(e.l_name, e.f_name)
+
+
+実行結果
+workbook=# SELECT
+workbook-# u.l_name || u.f_name AS 氏名
+workbook-# FROM
+workbook-# usr AS u
+workbook-# EXCEPT
+workbook-# SELECT
+workbook-# q.name
+workbook-# FROM
+workbook-# quest AS q
+workbook-# ;
+    氏名
+------------
+ 久保田守
+ 木下一樹
+ 児玉毅
+ 坂口駿
+ 松本博美
+ 有木茉莉
+ 井上一郎
+ 西島文子
+ 南沙恵
+ 吉岡遥
+ 小野雄二
+ 江本聡
+ 上原幸一
+ 河合泰治
+ 森本絵里
+ 和田修子
+ 矢口亜由美
+ 根岸裕子
+ 村井佐知子
+(19 行)

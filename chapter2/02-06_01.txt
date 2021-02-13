@@ -1,0 +1,80 @@
+
+作成者：山下
+作成日：2021/2/12
+
+chapter2
+
+2-6
+問1
+アンケート回答テーブル（quest）と社員テーブル（employee）から女性の氏名（カナ）だけを、
+氏（カナ）・名（カナ）昇順で取り出してみましょう。
+なお、重複データがあってもそのまま出力するものとします。
+以下の空欄を埋めて、SQL命令を完成させてください。
+
+SELECT
+	q.name_kana
+FROM
+	quest AS q
+WHERE
+	①sex = '女'
+②UNION
+SELECT
+	③CONCAT(e.l_name_kana,e.f_name_kana)
+FROM
+	employee AS e
+WHERE
+	sex =2
+ORDER BY
+	④1
+;
+
+アンケート回答テーブルから女性の氏名のみを抽出するため、sex列に対し指定文字列で条件指定
+①sex = '女'
+
+複数のテーブルから取り出したデータをまとめるため、UNION句を定義
+②UNION
+
+社員テーブルからの氏名は氏と名で列が別れているため、CONCATで結合する
+③CONCAT(e.l_name, e.f_name)
+
+UNION句でまとめられた結果を並べ替える列数を指定する
+④1
+
+
+実行結果
+mysql> SELECT
+    -> q.name_kana
+    -> FROM
+    -> quest AS q
+    -> WHERE
+    -> sex = '女'
+    -> UNION
+    -> SELECT
+    -> CONCAT(e.l_name_kana,e.f_name_kana)
+    -> FROM
+    -> employee AS e
+    -> WHERE
+    -> sex =2
+    -> ORDER BY
+    -> 1
+    -> ;
++----------------+
+| name_kana      |
++----------------+
+| イノウエマリ   |
+| ウエハラハルカ |
+| エモトシュウコ |
+| オノヒロミ     |
+| カワグチユウコ |
+| サトウトモコ   |
+| シミズハルコ   |
+| タナカマユコ   |
+| チカダアキコ   |
+| ツムラカズミ   |
+| トガワヨシミ   |
+| ナカザワヤスヨ |
+| ネギシアユミ   |
+| ノガミリエ     |
+| ヤマダナミ     |
++----------------+
+15 rows in set (0.00 sec)
