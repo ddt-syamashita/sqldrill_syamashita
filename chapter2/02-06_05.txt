@@ -1,0 +1,47 @@
+
+作成者：山下
+作成日：2021/2/13
+
+chapter2
+
+2-6
+問5
+ユーザテーブル（usr）、アンケート回答テーブル（quest）それぞれに含まれるユーザ氏名を比較し、
+双方に含まれるデータのみを取り出してみましょう。
+
+
+//取得する列を選択するため、SELECT文を定義する
+SELECT
+	//取得結果を氏列と名列で結合させるためCONCATを使用。
+	CONCAT(u.l_name, f_name)
+//どのテーブルから情報を取得するのか
+FROM
+	//ユーザテーブルから情報を取得する。ASを使用しテーブルに別名をつける
+	usr AS u
+//2つ定義したテーブルのどちらにも含まれる値を取り出すため、INTERSECT句を定義
+INTERSECT
+//2つ目の取得列を選択する
+SELECT
+	//比較対象の列を選択する
+	q.name
+FROM
+	//比較対象のテーブルを定義する。ASを使用しテーブルに別名をつける
+	quest AS q
+;
+
+
+取得結果
+workbook=# SELECT
+workbook-# CONCAT(u.l_name, f_name)
+workbook-# FROM
+workbook-# usr AS u
+workbook-# INTERSECT
+workbook-# SELECT
+workbook-# q.name
+workbook-# FROM
+workbook-# quest AS q
+workbook-# ;
+  concat
+----------
+ 山田太郎
+(1 行)

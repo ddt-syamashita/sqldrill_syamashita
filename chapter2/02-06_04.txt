@@ -1,0 +1,30 @@
+
+作成者：山下
+作成日：2021/2/13
+
+chapter2
+
+2-6
+問4
+以下は、著者情報テーブル（author）とユーザテーブル（usr）からそれぞれ氏名の情報を
+取り出すための	SQL命令ですが、2点誤りがあります。誤りを指摘してください。
+なお、統合したデータは重複を含まないものとし、結果は氏名（カナ）について降順で並べ替えます。
+
+
+SELECT
+	a.name_kana
+FROM
+	author AS a
+UNION ALL
+SELECT
+	u.l_name_kana,
+	u.f_name_kana
+FROM
+	usr AS u
+ORDER BY
+	1 DESC
+;
+
+①18行目のUNION ALLは重複を含むものも出力してしまうため誤り。ALLは不要。
+②20、21行目のusrテーブルの氏名列は結合する必要がある。各SELECTで選択する数は揃える。
+
